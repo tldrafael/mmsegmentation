@@ -71,20 +71,13 @@ class RTKDataset(CustomDataset):
         mmcv.mkdir_or_exist(imgfile_prefix)
         result_files = []
         for result, idx in zip(results, indices):
-            if to_label_id:
-                result = self._convert_to_label_id(result)
+
             filename = self.img_infos[idx]['filename']
             basename = osp.splitext(osp.basename(filename))[0]
-
             png_filename = osp.join(imgfile_prefix, f'{basename}.png')
 
             output = Image.fromarray(result.astype(np.uint8)).convert('P')
             import cityscapesscripts.helpers.labels as CSLabels
-            palette = np.zeros((len(CSLabels.id2label), 3), dtype=np.uint8)
-            for label_id, label in CSLabels.id2label.items():
-                palette[label_id] = label.color
-
-            output.putpalette(palette)
             output.save(png_filename)
             result_files.append(png_filename)
 
