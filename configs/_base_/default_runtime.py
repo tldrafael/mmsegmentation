@@ -1,9 +1,9 @@
 # yapf:disable
 log_config = dict(
-    interval=50,
+    interval=1000,
     hooks=[
         dict(type='TextLoggerHook', by_epoch=False),
-        # dict(type='TensorboardLoggerHook')
+        dict(type='TensorboardLoggerHook')
     ])
 # yapf:enable
 dist_params = dict(backend='nccl')
